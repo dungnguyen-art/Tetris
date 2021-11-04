@@ -38,6 +38,8 @@ public class TetrisBlock {
         }
     }
     public void spawn(int gridWidth){
+        currentRotation = 0;
+        shape = shapes[currentRotation];
         y = -getHeight();
         x = (gridWidth - getWidth())/2;
     }
@@ -84,5 +86,11 @@ public class TetrisBlock {
         if(currentRotation > 3)
             currentRotation = 0;
         shape = shapes[currentRotation];
+    }
+    public int getLeftEdge(){
+        return x;
+    }
+    public int getRightEdge(){
+        return x + getWidth();
     }
 }

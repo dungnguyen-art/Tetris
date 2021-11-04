@@ -29,7 +29,7 @@ public class GameArea extends JPanel {
         gridColumns = columns;
         gridCellSize = this.getBounds().width / gridColumns;
         gridRows = this.getBounds().height / gridCellSize;
-//        spawnBlock();
+        spawnBlock();
         backgroud = new Color[gridRows][gridColumns];
         
     }
@@ -38,40 +38,108 @@ public class GameArea extends JPanel {
         block = new TetrisBlock(new int[][]{{1,0},{1,0},{1,1}}, Color.blue);
         block.spawn(gridColumns);
     }
-//    
-//    public boolean moveBlockDown(){
-//        if(checkBotton() == false){
-//            moveBlockToBackgroud();
-//            return false;
-//        }
-//        block.moveDown();
-//        repaint();
-//        return true;
-//    }
-//    public void moveBlockRight(){
-//        block.moveRight();
-//        repaint();
-//    }
-//    public void moveBlockLeft(){
-//        block.moveLeft();
-//        repaint();
-//    }
-//    public void dropBlock(){
-//        while(checkBotton()){
-//            block.moveDown();
-//        }
-//        repaint();
-//    }
-//    public void rotateBlock(){
-//        block.rotate();
-//        repaint();
-//    }
-//    private boolean checkBotton(){
-//        if(block.getBottonEdge() == gridRows){
-//            return false;
-//        }
-//        return true;
-//    }
+    
+    public boolean moveBlockDown(){
+        if(checkBotton() == false){
+            moveBlockToBackgroud();
+            return false;
+        }
+        block.moveDown();
+        repaint();
+        return true;
+    }
+    public void moveBlockRight(){
+        if(checkRight() == false){
+            return;
+        }
+        block.moveRight();
+        repaint();
+    }
+    public void moveBlockLeft(){
+        if(checkLeft() == false){
+            return;
+        }
+        block.moveLeft();
+        repaint();
+    }
+    public void dropBlock(){
+        while(checkBotton()){
+            block.moveDown();
+        }
+        repaint();
+    }
+    public void rotateBlock(){
+        block.rotate();
+        repaint();
+    }
+    private boolean checkBotton(){
+        if(block.getBottonEdge() == gridRows){
+            return false;
+        }
+        int[][]shape = block.getShape();
+        int w = block.getWidth();
+        int h = block.getHeight();
+        for(int col = 0; col < w; col++){
+            for(int row = h-1;row >=0;row--){
+                if(shape[row][col] != 0){
+                    int x = col + block.getX();
+                    int y = row + block.getY() + 1;
+                    if(y<0) break;
+                    if(backgroud[y][x] != null){
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+    private boolean checkLeft(){
+        if(block.getLeftEdge() == 0){
+            return false;
+        }
+        int[][]shape = block.getShape();
+        int w = block.getWidth();
+        int h = block.getHeight();
+        for(int row = 0; row < w; row++){
+            for(int col = 0;col < w;col++){
+                if(shape[row][col] != 0){
+                    int x = col + block.getX() - 1;
+                    int y = row + block.getY();
+                    if(y<0) break;
+                    if(backgroud[y][x] != null){
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+    private boolean checkRight(){
+        if(block.getRightEdge() == gridColumns){
+            return false;
+        }
+        
+        int[][]shape = block.getShape();
+        int w = block.getWidth();
+        int h = block.getHeight();
+        for(int row = 0; row < w; row++){
+            for(int col = w-1;col >= 0;col--){
+                if(shape[row][col] != 0){
+                    int x = col + block.getX() + 1;
+                    int y = row + block.getY();
+                    if(y<0) break;
+                    if(backgroud[y][x] != null){
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+        
+        return true;
+    }
     
     private void moveBlockToBackgroud(){
         int[][] shape = block.getShape();
@@ -146,4 +214,3 @@ public class GameArea extends JPanel {
         drawBlock(g);
     }
 }
-////sfsfsfsf
