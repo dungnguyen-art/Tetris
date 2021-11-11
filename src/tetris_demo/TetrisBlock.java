@@ -82,9 +82,11 @@ public class TetrisBlock {
         return y + getHeight();
     }
     public void rotate(){
-        currentRotation++;
-        if(currentRotation > 3)
+        currentRotation++; 
+        if(currentRotation > 3){
             currentRotation = 0;
+        }
+        
         shape = shapes[currentRotation];
     }
     public int getLeftEdge(){
