@@ -25,6 +25,8 @@ public class GameThread extends Thread {
     public GameThread(GameArea ga, GameForm gf) {
         this.ga = ga;
         this.gf = gf;
+        gf.updateScore(score);
+        gf.updateLevel(level);
     }
 
     @Override
@@ -35,11 +37,11 @@ public class GameThread extends Thread {
                 try {
                     Thread.sleep(pause);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
                 }
             }
             if(ga.isBlockOutOfBounds()){
-                System.out.println("Game Over");
+                Tetris_demo.gameOver(score);
                 break;
             }
             ga.moveBlockToBackgroud();

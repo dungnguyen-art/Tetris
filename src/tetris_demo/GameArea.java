@@ -25,7 +25,7 @@ public class GameArea extends JPanel {
     private TetrisBlock[] blocks;
     
     public GameArea(JPanel placeholder, int columns) {
-        placeholder.setVisible(false);
+//        placeholder.setVisible(false);
         this.setBounds(placeholder.getBounds());
         this.setBackground(placeholder.getBackground());
         this.setBorder(placeholder.getBorder());
@@ -33,8 +33,6 @@ public class GameArea extends JPanel {
         gridColumns = columns;
         gridCellSize = this.getBounds().width / gridColumns;
         gridRows = this.getBounds().height / gridCellSize;
-        
-        backgroud = new Color[gridRows][gridColumns];
         
         blocks = new TetrisBlock[]{new IShape(),
                                    new JShape(),
@@ -46,6 +44,9 @@ public class GameArea extends JPanel {
         };
     }
     
+    public void initBackgroundArray(){
+        backgroud = new Color[gridRows][gridColumns];
+    }
     public void spawnBlock(){
         Random r = new Random();
         

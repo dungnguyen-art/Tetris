@@ -22,13 +22,12 @@ public class GameForm extends JFrame {
      * Creates new form GameForm
      */
     private GameArea ga;
+    private GameThread gt;
     public GameForm() {
         initComponents();
         ga = new GameArea(gameAreaPlaceholder,10);
         this.add(ga);
         initControls();
-        
-        startGame();
     }
     private void initControls(){
         InputMap im = this.getRootPane().getInputMap();
@@ -65,7 +64,9 @@ public class GameForm extends JFrame {
         });
     }
     public void startGame(){
-        new GameThread(ga,this).start();
+        ga.initBackgroundArray();
+        gt = new GameThread(ga,this);
+        gt.start();
     }
     public void updateScore(int score){
         displayScore.setText("Score: " + score);
@@ -86,6 +87,7 @@ public class GameForm extends JFrame {
         gameAreaPlaceholder = new javax.swing.JPanel();
         displayScore = new javax.swing.JLabel();
         displayLevel = new javax.swing.JLabel();
+        btnMainMenu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -105,15 +107,28 @@ public class GameForm extends JFrame {
         );
 
         displayScore.setText("Score: 0");
+        displayScore.setMaximumSize(new java.awt.Dimension(38, 14));
+        displayScore.setMinimumSize(new java.awt.Dimension(38, 14));
+        displayScore.setPreferredSize(new java.awt.Dimension(38, 14));
 
         displayLevel.setText("Level: 1");
+
+        btnMainMenu.setText("Main Menu");
+        btnMainMenu.setFocusable(false);
+        btnMainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainMenuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(btnMainMenu)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(gameAreaPlaceholder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,16 +140,25 @@ public class GameForm extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(gameAreaPlaceholder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(displayScore)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayLevel)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(displayScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(displayLevel))
+                    .addComponent(btnMainMenu))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainMenuActionPerformed
+        gt.interrupt();
+        this.setVisible(false);
+        Tetris_demo.showStartup();
+    }//GEN-LAST:event_btnMainMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,6 +197,7 @@ public class GameForm extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMainMenu;
     private javax.swing.JLabel displayLevel;
     private javax.swing.JLabel displayScore;
     private javax.swing.JPanel gameAreaPlaceholder;
