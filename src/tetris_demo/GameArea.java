@@ -188,10 +188,13 @@ public class GameArea extends JPanel {
                 linesCleared ++;
                 clearLine(r);
                 shiftDown(r);
-                r++;
                 clearLine(0);
+                r++;
                 repaint();
             }
+        }
+        if(linesCleared>0){
+            Tetris_demo.playClear();
         }
         return linesCleared;
     }

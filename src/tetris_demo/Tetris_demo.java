@@ -23,6 +23,7 @@ public class Tetris_demo {
     private static GameForm gf;
     private static StartupForm sf;
     private static LeaderboardForm lf;
+    private static AudioPlayer audio = new AudioPlayer();
     
     public static void start(){
         gf.setVisible(true);
@@ -38,6 +39,7 @@ public class Tetris_demo {
     } 
     
     public static void gameOver(int score){
+        playGameover();
         String playerName = JOptionPane.showInputDialog("Game Over!\nPlease enter your name.");
         gf.setVisible(false);
         try {
@@ -45,6 +47,13 @@ public class Tetris_demo {
         } catch (IOException ex) {
             Logger.getLogger(Tetris_demo.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void playClear(){
+        audio.playclearLine();
+    }
+    public static void playGameover(){
+        audio.playGameover();
     }
     public static void main(String[] args) {
          java.awt.EventQueue.invokeLater(new Runnable() {
