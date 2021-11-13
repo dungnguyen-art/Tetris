@@ -5,7 +5,16 @@
  */
 package tetris_demo;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.RowSorter.SortKey;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,14 +26,50 @@ public class LeaderboardForm extends javax.swing.JFrame {
      * Creates new form LeadeBoardForm
      */
     private DefaultTableModel tm;
+    private String leaderboardFile = "leaderboard";
+    private TableRowSorter<TableModel> sorter;
     
-    public LeaderboardForm() {
+    public LeaderboardForm() throws IOException {
         initComponents();
+        initTableData();
+        initTableSorter();
     }
     
     private void initTableData(){
+        Vector ci  = new Vector();
+        ci.add("Player");
+        ci.add("Score");
         tm = (DefaultTableModel) leaderboard.getModel();
+        try {
+            FileInputStream fs = new FileInputStream(leaderboardFile);
+            ObjectInputStream os = new ObjectInputStream(fs);
+            tm.setDataVector((Vector<Vector>) os.readObject(), ci);
+            os.close();
+            fs.close();
+        } catch (Exception e) {
+        }
     }
+    
+    private void initTableSorter(){
+        sorter = new TableRowSorter<>(tm);
+        leaderboard.setRowSorter(sorter);
+        
+        ArrayList<SortKey> keys = new ArrayList<>();
+        keys.add(new SortKey(1,SortOrder.DESCENDING));
+        
+        sorter.setSortKeys(keys);
+    }
+    private void savaLeaderboard(){
+        try {
+            FileOutputStream fs = new FileOutputStream(leaderboardFile);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(tm.getDataVector());
+            os.close();
+            fs.close();
+        } catch (Exception e) {
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,9 +104,16 @@ public class LeaderboardForm extends javax.swing.JFrame {
                 "Player", "Score"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -104,8 +156,10 @@ public class LeaderboardForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void addPlayer(String playerName, int score){
+    public void addPlayer(String playerName, int score) throws IOException{
         tm.addRow(new Object[] {playerName, score});
+        sorter.sort();
+        savaLeaderboard();
         this.setVisible(true);
     }
     public static void main(String args[]) {
@@ -138,7 +192,11 @@ public class LeaderboardForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LeaderboardForm().setVisible(true);
+                try {
+                    new LeaderboardForm().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(LeaderboardForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -10,6 +10,9 @@
  */
 package tetris_demo;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class Tetris_demo {
@@ -37,7 +40,11 @@ public class Tetris_demo {
     public static void gameOver(int score){
         String playerName = JOptionPane.showInputDialog("Game Over!\nPlease enter your name.");
         gf.setVisible(false);
-        lf.addPlayer(playerName, score);
+        try {
+            lf.addPlayer(playerName, score);
+        } catch (IOException ex) {
+            Logger.getLogger(Tetris_demo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public static void main(String[] args) {
          java.awt.EventQueue.invokeLater(new Runnable() {
@@ -45,7 +52,11 @@ public class Tetris_demo {
             public void run() {
                 gf = new GameForm();
                 sf = new StartupForm();
-                lf = new LeaderboardForm();
+                try {
+                    lf = new LeaderboardForm();
+                } catch (IOException ex) {
+                    Logger.getLogger(Tetris_demo.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 sf.setVisible(true);
             }
         });
