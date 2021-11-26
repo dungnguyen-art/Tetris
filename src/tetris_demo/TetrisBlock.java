@@ -39,7 +39,7 @@ public class TetrisBlock {
             shape = shapes[i];
         }
     }
-    public void spawn(int gridWidth){
+    public void spawn(int gridWidth){ // tạo khối mới.
         Random r = new Random();
         
         currentRotation = r.nextInt(shapes.length);
@@ -49,9 +49,9 @@ public class TetrisBlock {
         color = availableColors[r.nextInt(availableColors.length)];
     }
 
-    public int[][] getShape() {
-        currentRotation = 0;
-        shape = shapes[currentRotation];
+    public int[][] getShape() { // nhận một khối.
+//        currentRotation = 0;
+//        shape = shapes[currentRotation];
         return shape;
     }
 
@@ -59,29 +59,29 @@ public class TetrisBlock {
         return color;
     }
     
-    public int getX(){
+    public int getX(){  // nhận hoàng độ
         return x;
     }
     
-    public void setX(int newX){
+    public void setX(int newX){ // tạo hoành độ mới
         x = newX;
     }
-    public int getY(){
+    public int getY(){          // nhận tung độ.
         return y;
     }
-    public void setY(int newY){
+    public void setY(int newY){ // tạo tung độ mới.
         y = newY;
     }
     
-    public int getHeight(){
+    public int getHeight(){     // lấy chiều cao của khối.
         return shape.length;
     }
     
-    public int getWidth(){
+    public int getWidth(){      // lấy chiều rộng của khối.
         return shape[0].length;
     }
     
-    public void moveDown(){
+    public void moveDown(){     
         y++;
     }
     public void moveRight(){
@@ -90,9 +90,10 @@ public class TetrisBlock {
     public void moveLeft(){
         x--;
     }
-    public int getBottonEdge(){
+    public int getBottomEdge(){     //cập nhật chiều cao của đáy.
         return y + getHeight();
     }
+    
     public void rotate(){
         currentRotation++; 
         if(currentRotation > 3){
@@ -101,10 +102,11 @@ public class TetrisBlock {
         
         shape = shapes[currentRotation];
     }
-    public int getLeftEdge(){
+    
+    public int getLeftEdge(){      // lấy cạnh trái.
         return x;
     }
-    public int getRightEdge(){
-        return x + getWidth();
+    public int getRightEdge(){      // lấy cạnh phải.
+        return x + getWidth();      // tọa độ x + chiều rộng của khối.
     }
 }

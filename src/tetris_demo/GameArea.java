@@ -22,8 +22,9 @@ public class GameArea extends JPanel {
     private Color[][] backgroud;
     private TetrisBlock block;
 
-    private TetrisBlock[] blocks;
+    private TetrisBlock  blocks []; // mang doi tuong TetrisBlock.
     
+//    private int [] a = new int[100];
     public GameArea(JPanel placeholder, int columns) {
 //        placeholder.setVisible(false);
         this.setBounds(placeholder.getBounds());
@@ -44,16 +45,16 @@ public class GameArea extends JPanel {
         };
     }
     
-    public void initBackgroundArray(){
+    public void initBackgroundArray(){          // khởi tạo giao diện lưới.
         backgroud = new Color[gridRows][gridColumns];
     }
-    public void spawnBlock(){
+    public void spawnBlock(){  // ????
         Random r = new Random();
         
         block =  blocks[r.nextInt(blocks.length)];
         block.spawn(gridColumns);
     }
-    public boolean isBlockOutOfBounds(){
+    public boolean isBlockOutOfBounds(){        // giới hạn vị trí xuất hiện của khối mới.
         if(block.getY() < 0){
             block = null;
             return true;
@@ -62,7 +63,7 @@ public class GameArea extends JPanel {
     }
     
     public boolean moveBlockDown(){
-        if(checkBotton() == false){
+        if(checkBottom() == false){
 //            moveBlockToBackgroud();
 //            clearLines();
             return false;
@@ -89,24 +90,27 @@ public class GameArea extends JPanel {
     }
     public void dropBlock(){
         if(block == null) return;
-        while(checkBotton()){
+        while(checkBottom()){
             block.moveDown();
         }
         repaint();
     }
+    
     public void rotateBlock(){
         if(block == null) return;
         block.rotate();
-        if(block.getLeftEdge() < 0)
+        if(block.getLeftEdge() < 0)             // đặt giới hạn cạnh trái
             block.setX(0);
-        if(block.getRightEdge() >= gridColumns)
+        if(block.getRightEdge() >= gridColumns) // đặt giới hạn cạnh phải.
             block.setX(gridColumns - block.getWidth());
-        if(block.getBottonEdge() >= gridRows)
+        if(block.getBottomEdge() >= gridRows)   // đặt giới hạn của đáy
             block.setY(gridRows - block.getHeight());
         repaint();
     }
-    private boolean checkBotton(){
-        if(block.getBottonEdge() == gridRows){
+    
+    
+    private boolean checkBottom(){
+        if(block.getBottomEdge() == gridRows){
             return false;
         }
         int[][]shape = block.getShape();
@@ -149,6 +153,7 @@ public class GameArea extends JPanel {
         }
         return true;
     }
+    
     private boolean checkRight(){
         if(block.getRightEdge() == gridColumns){
             return false;
@@ -173,6 +178,7 @@ public class GameArea extends JPanel {
         
         return true;
     }
+    
     public int clearLines(){
         boolean lineFilled;
         int linesCleared = 0;
@@ -211,7 +217,7 @@ public class GameArea extends JPanel {
         }
     }
     
-    public void moveBlockToBackgroud(){
+    public void moveBlockToBackgroud(){         // vẽ khối khi thay đổi tọa độ
         int[][] shape = block.getShape();
         int h = block.getHeight();
         int w = block.getWidth();
@@ -230,7 +236,7 @@ public class GameArea extends JPanel {
     }
     
     
-    public void drawBlock(Graphics g){
+    public void drawBlock(Graphics g){  // sinh khối mới
         int h = block.getHeight();
         int w = block.getWidth();
         Color c = block.getColor();
@@ -248,7 +254,7 @@ public class GameArea extends JPanel {
         }
     }
     
-    private void drawBackground(Graphics g){
+    private void drawBackground(Graphics g){    // vẽ khối
         Color color;
         for(int r=0;r<gridRows;r++){
             for(int c = 0; c < gridColumns; c++){
@@ -263,7 +269,7 @@ public class GameArea extends JPanel {
         }
     }
     
-    private void drawGridSquare(Graphics g, Color color, int x, int y){
+    private void drawGridSquare(Graphics g, Color color, int x, int y){ // vẽ từng ô vuông một
         g.setColor(block.getColor());
         g.fillRect(x, y, gridCellSize, gridCellSize);
         g.setColor(color.black);
