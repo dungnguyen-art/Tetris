@@ -55,6 +55,10 @@ public class Tetris_demo {
     public static void playGameover(){
         audio.playGameover();
     }
+    public static void playBackgroundMusic(){
+        audio.playBackgroundMusic();
+    }
+    
     public static void main(String[] args) {
          java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

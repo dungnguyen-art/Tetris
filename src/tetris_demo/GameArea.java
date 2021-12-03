@@ -48,7 +48,7 @@ public class GameArea extends JPanel {
     public void initBackgroundArray(){          // khởi tạo giao diện lưới.
         backgroud = new Color[gridRows][gridColumns];
     }
-    public void spawnBlock(){  // ????
+    public void spawnBlock(){  
         Random r = new Random();
         
         block =  blocks[r.nextInt(blocks.length)];
@@ -236,14 +236,14 @@ public class GameArea extends JPanel {
     }
     
     
-    public void drawBlock(Graphics g){  // sinh khối mới
+    public void drawBlock(Graphics g){  // vẽ khối
         int h = block.getHeight();
         int w = block.getWidth();
         Color c = block.getColor();
         int[][] shape = block.getShape();
         
         for(int row = 0;row < h;row ++){
-            for(int col = 0;col < w; col ++){
+            for(int col = 0;col < w; col ++){ 
                 if(shape[row][col] == 1){
                     int x = (block.getX() + col)*gridCellSize;
                     int y = (block.getY() + row)*gridCellSize;
@@ -254,7 +254,7 @@ public class GameArea extends JPanel {
         }
     }
     
-    private void drawBackground(Graphics g){    // vẽ khối
+    private void drawBackground(Graphics g){    // vẽ nền
         Color color;
         for(int r=0;r<gridRows;r++){
             for(int c = 0; c < gridColumns; c++){
@@ -270,10 +270,11 @@ public class GameArea extends JPanel {
     }
     
     private void drawGridSquare(Graphics g, Color color, int x, int y){ // vẽ từng ô vuông một
-        g.setColor(block.getColor());
+        g.setColor(color);
         g.fillRect(x, y, gridCellSize, gridCellSize);
         g.setColor(color.black);
         g.drawRect(x, y, gridCellSize, gridCellSize);
+        
     }
     
     

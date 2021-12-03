@@ -16,6 +16,7 @@ public class GameThread extends Thread {
 
     private GameArea ga;
     private GameForm gf;
+    private Tetris_demo td;
     private int score;
     private int level = 1;
     private int scorePerLevel = 3;
@@ -31,7 +32,9 @@ public class GameThread extends Thread {
 
     @Override
     public void run() {
+        td.playBackgroundMusic();
         while (true) {
+            
             ga.spawnBlock();
             while (ga.moveBlockDown() == true) {
                 try {
@@ -51,7 +54,9 @@ public class GameThread extends Thread {
             if(lvl > level){
                 level = lvl;
                 gf.updateLevel(level);
-                pause -= speedupPerLevel; 
+                if(pause > 200){
+                    pause -= speedupPerLevel; 
+                }
             }
         }
     }

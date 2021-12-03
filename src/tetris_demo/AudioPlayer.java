@@ -21,16 +21,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class AudioPlayer {
     private String soundsFolders = "tetrissounds" + File.separator;
     private String clearLinePath = soundsFolders + "line.wav";
-    private String gameoverPath = soundsFolders + "Oiline.wav";
+    private String gameoverPath = soundsFolders + "success.wav";
+    private String backgroundMusicPath = soundsFolders + "Triumphal.wav";
     
-    private Clip clearLineSound, gameoverSound;
+    private Clip clearLineSound, gameoverSound, backgroundsound;
     public AudioPlayer(){
         try {
             clearLineSound = AudioSystem.getClip();
             gameoverSound = AudioSystem.getClip();
+            backgroundsound = AudioSystem.getClip();
+            
             
             clearLineSound.open(AudioSystem.getAudioInputStream(new File(clearLinePath).getAbsoluteFile()));
             gameoverSound.open(AudioSystem.getAudioInputStream(new File(gameoverPath).getAbsoluteFile()));
+            backgroundsound.open(AudioSystem.getAudioInputStream(new File(backgroundMusicPath).getAbsoluteFile()));
         } catch (LineUnavailableException ex) {
             Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedAudioFileException ex) {
@@ -47,6 +51,11 @@ public class AudioPlayer {
     public void playGameover(){
         gameoverSound.setFramePosition(0);
         gameoverSound.start();
+    }
+    
+    public void playBackgroundMusic(){
+        backgroundsound.setFramePosition(0);
+        backgroundsound.start();
     }
 }
 
