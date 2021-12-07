@@ -7,7 +7,12 @@ package tetris_demo;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import tetrisBlocks.*;
 /**
@@ -20,6 +25,7 @@ public class GameArea extends JPanel {
     private int gridColumns;
     private int gridCellSize;
     private Color[][] backgroud;
+    private String [][] background2;
     private TetrisBlock block;
 
     private TetrisBlock  blocks []; // mang doi tuong TetrisBlock.
@@ -47,6 +53,7 @@ public class GameArea extends JPanel {
     
     public void initBackgroundArray(){          // khởi tạo giao diện lưới.
         backgroud = new Color[gridRows][gridColumns];
+        background2 = new String[gridRows][gridColumns];
     }
     public void spawnBlock(){  
         Random r = new Random();
@@ -207,12 +214,14 @@ public class GameArea extends JPanel {
     private void clearLine(int r){
         for(int i = 0;i<gridColumns;i++){
             backgroud[r][i] = null;
+            background2[r][i] = null;
         }
     }
     private void shiftDown(int r){
         for(int row = r; row > 0; row--){
             for(int col = 0; col < gridColumns; col++){
                 backgroud[row][col] = backgroud[row-1][col];
+                background2[row][col] = background2[row-1][col];
             }
         }
     }
@@ -230,6 +239,7 @@ public class GameArea extends JPanel {
             for(int c = 0;c<w;c++){
                 if(shape[r][c] == 1){
                     backgroud[r+yPos][c+xPos] = color;
+                    background2[r+yPos][c+xPos] = block.getImage();
                 }
             }
         }
@@ -237,18 +247,20 @@ public class GameArea extends JPanel {
     
     
     public void drawBlock(Graphics g){  // vẽ khối
-        int h = block.getHeight();
-        int w = block.getWidth();
-        Color c = block.getColor();
-        int[][] shape = block.getShape();
-        
-        for(int row = 0;row < h;row ++){
-            for(int col = 0;col < w; col ++){ 
-                if(shape[row][col] == 1){
-                    int x = (block.getX() + col)*gridCellSize;
-                    int y = (block.getY() + row)*gridCellSize;
-                    
-                    drawGridSquare(g, c, x, y);
+        if (block != null) {
+            int h = block.getHeight();
+            int w = block.getWidth();
+            Color c = block.getColor();
+            int[][] shape = block.getShape();
+
+            for(int row = 0;row < h;row ++){
+                for(int col = 0;col < w; col ++){ 
+                    if(shape[row][col] == 1){
+                        int x = (block.getX() + col)*gridCellSize;
+                        int y = (block.getY() + row)*gridCellSize;
+
+                        drawGridSquare(g, c, x, y, block.getImage());
+                    }
                 }
             }
         }
@@ -259,22 +271,33 @@ public class GameArea extends JPanel {
         for(int r=0;r<gridRows;r++){
             for(int c = 0; c < gridColumns; c++){
                 color = backgroud[r][c];
+                String img = background2[r][c];
                 if(color != null){
                     int x = c*gridCellSize;
                     int y = r*gridCellSize;
                     
-                    drawGridSquare(g, color, x, y);
+                    drawGridSquare(g, color, x, y, img);
                 }
             }
         }
     }
     
-    private void drawGridSquare(Graphics g, Color color, int x, int y){ // vẽ từng ô vuông một
-        g.setColor(color);
-        g.fillRect(x, y, gridCellSize, gridCellSize);
-        g.setColor(color.black);
-        g.drawRect(x, y, gridCellSize, gridCellSize);
-        
+    private void drawGridSquare(Graphics g, Color color, int x, int y, String img){ // vẽ từng ô vuông một
+        if (img.equals("")) {
+            g.setColor(color);
+            g.fillRect(x, y, gridCellSize, gridCellSize);
+            g.setColor(color.black);
+            g.drawRect(x, y, gridCellSize, gridCellSize);
+        }
+        else {
+            BufferedImage image = null;
+            try {
+                image = ImageIO.read(new File(img));
+            }
+            catch (IOException ex) {
+            }
+            g.drawImage(image.getScaledInstance(gridCellSize, gridCellSize, Image.SCALE_SMOOTH), x, y, this);  
+        }
     }
     
     

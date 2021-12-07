@@ -119,7 +119,8 @@ public class GameForm extends JFrame {
 
         displayLevel.setText("Level: 1");
 
-        btnMainMenu.setText("Main Menu");
+        btnMainMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/menu_button.png"))); // NOI18N
+        btnMainMenu.setBorder(null);
         btnMainMenu.setFocusable(false);
         btnMainMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,8 +134,8 @@ public class GameForm extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(btnMainMenu)
-                .addGap(37, 37, 37)
+                .addComponent(btnMainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
                 .addComponent(gameAreaPlaceholder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

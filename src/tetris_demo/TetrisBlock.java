@@ -15,11 +15,13 @@ import java.util.Random;
 public class TetrisBlock {
     private int[][] shape;
     private Color color;
+    private String img;
     private int x, y;
     private int[][][] shapes;
     private int currentRotation;
     
     private Color[] availableColors = {Color.green, Color.red, Color.blue};
+     private String listImg[] = {"src\\image\\blue_block.png", "src\\image\\cyan_block.png", "src\\image\\green_block.png", "src\\image\\orange_block.png", "src\\image\\red_block.png"};
     
     public TetrisBlock(int[][] shape) {
         this.shape = shape;
@@ -47,6 +49,7 @@ public class TetrisBlock {
         y = -getHeight();
         x = r.nextInt(gridWidth - getWidth());
         color = availableColors[r.nextInt(availableColors.length)];
+        img = listImg[r.nextInt(listImg.length)];
     }
 
     public int[][] getShape() { // nhận một khối.
@@ -108,5 +111,8 @@ public class TetrisBlock {
     }
     public int getRightEdge(){      // lấy cạnh phải.
         return x + getWidth();      // tọa độ x + chiều rộng của khối.
+    }
+    public String getImage() {
+        return img;
     }
 }
