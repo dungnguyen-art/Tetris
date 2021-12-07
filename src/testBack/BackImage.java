@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tetris_demo;
+package testBack;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -24,7 +24,7 @@ public class BackImage extends JFrame{
         setVisible(true);
         setLayout(new BorderLayout());
         
-        setContentPane(new JLabel(new ImageIcon("C:\\Users\\Admin\\Pictures\\M10\\F_back.jpg")));
+        setContentPane(new JLabel(new ImageIcon("b.jpg")));
         setLayout(new FlowLayout());
         L1 = new JLabel();
         add(L1);

@@ -5,11 +5,17 @@
  */
 package tetris_demo;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 /**
@@ -17,7 +23,7 @@ import javax.swing.KeyStroke;
  * @author Admin
  */
 public class GameForm extends JFrame {
-
+      private JLabel L1;
     /**
      * Creates new form GameForm
      */
@@ -193,6 +199,43 @@ public class GameForm extends JFrame {
             }
         });
     }
+//    public void BackImage(){
+//        setSize(700,700);
+//        setLocationRelativeTo(null);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setVisible(true);
+//        setLayout(new BorderLayout());
+//        
+//        setContentPane(new JLabel(new ImageIcon("C:\\Users\\Admin\\Pictures\\M10\\F_back.jpg")));
+//        setLayout(new FlowLayout());
+//        L1 = new JLabel();
+//        add(L1);
+//        setSize(500,500);
+//    }
+    
+//    public void ImageBackground ()
+//    {
+//        JFrame frame = new JFrame("Display an image in the background");
+//        final ImageIcon icon = new ImageIcon("background.png");
+//        JTextArea text = new JTextArea() 
+//        {
+//        Image img = icon.getImage();
+//        // instance initializer
+//        {setOpaque(false);}
+//        public void paintComponent(Graphics graphics) 
+//        {
+//            graphics.drawImage(img, 0, 0, this);
+//            super.paintComponent(graphics);
+//        }
+//        };
+//        JScrollPane pane = new JScrollPane(text);
+//        Container content = frame.getContentPane();
+//        content.add(pane, BorderLayout.CENTER);
+//        frame.setDefaultCloseOperation(3);
+//        frame.setSize(400, 300);
+//        frame.setVisible(true);
+//  }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMainMenu;
